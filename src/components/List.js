@@ -43,7 +43,7 @@ export class List extends React.Component {
     const markerList = this.state.markers.map((marker,index) => {
       const listClassNames = "list-group-item " + (marker.selected ? "active" : "");
       return (
-        <li className={listClassNames} key={index} tabindex={index+2} onClick={this.onClick} data-id={marker.venue_id}>{marker.name}</li>
+        <li className={listClassNames} key={index} tabIndex={index+2} onClick={this.onClick} data-id={marker.venue_id}>{marker.name}</li>
       );
     });
     return (
@@ -51,7 +51,7 @@ export class List extends React.Component {
         <form>
           <div className="form-row filter-padding">
             <div className="col">
-              <input type="text" className="form-control filter-padding" placeholder="Filter" tabindex={1}  onChange={this.onFilterChange} />
+              <input aria-label="filter" type="text" className="form-control filter-padding" placeholder="Filter" tabIndex={1}  onChange={this.onFilterChange} />
             </div>
           </div>
         </form>

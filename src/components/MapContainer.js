@@ -22,17 +22,34 @@ export class MapContainer extends React.Component {
     this.updateStateFromProps(nextProps);
   }
 
+  componentDidCatch(err, info) {
+    console.log("Errored!");
+    this.setState({ hasError: true });
+  }
+
   updateStateFromProps = (props) => {
     const activeMarkers = props.markers.filter(m => m.selected);
     const activeMarker = (activeMarkers.length === 1 ? activeMarkers[0] : {});
     if(!(Object.keys(activeMarker).length === 0 && activeMarker.constructor === Object)){
-      FoursquareAPI.get(activeMarker.venue_id).then((data) => this.setState({
-        activeMarker: activeMarker,
-        showingInfoWindow: true,
-        markers: props.markers,
-        marker_info_name: data.response.venue.name,
-        marker_info_address: data.response.venue.location.address
-      }))
+      FoursquareAPI.get(activeMarker.venue_id).then((data) => {
+        if(data.meta.code === '200'){
+          this.setState({
+            activeMarker: activeMarker,
+            showingInfoWindow: true,
+            markers: props.markers,
+            marker_info_name: data.response.venue.name,
+            marker_info_address: data.response.venue.location.address
+          })
+        }else{
+          this.setState({
+            activeMarker: activeMarker,
+            showingInfoWindow: true,
+            markers: props.markers,
+            marker_info_name: 'Error',
+            marker_info_address: 'Unable to connect to FoursquareAPI'
+          })
+        }
+      })
     }else{
       this.setState({
         markers:props.markers,
@@ -61,12 +78,24 @@ export class MapContainer extends React.Component {
     }
   }
 
+  onMapReady = (a,s,d,f) =>{
+    console.log("Map Ready");
+    console.log(a);
+    console.log(s);
+    console.log(d);
+    console.log(f);
+  }
+
   render() {
     console.log("Rendering Map Container");
+    if(this.state.hasError){
+      return (<p>Google maps failed to load...</p>);
+    }
     return (
-        <Map className="col-lg-10 col-12 map-container" google={this.props.google}
+        <Map aria-label="Map" className="col-lg-10 col-12 map-container" google={this.props.google}
           initialCenter={{lat:27.270223, lng:-80.319797}}
           zoom={12}
+          onReady={this.onMapReady}
           onClick={this.onMapClick}
           >
           {this.state.markers.map((marker, index) => {
