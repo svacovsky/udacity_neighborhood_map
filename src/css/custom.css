@@ -1,0 +1,21 @@
+.filter-padding {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.map-container {
+  height:100%;
+}
+
+@media (max-width: 768px) {
+  .map-container {
+    height:500px !important;
+  }
+  .list-div {
+    padding-top:500px;
+  }
+}
+
+h1 {
+  margin-top: 2pt; 
+  font-size: 6pt;
+}
