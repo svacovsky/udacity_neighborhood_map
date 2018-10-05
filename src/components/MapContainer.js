@@ -1,5 +1,5 @@
 import React from 'react';
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import {GoogleApiWrapper, Map, InfoWindow, Marker} from 'google-maps-react';
 import FoursquareInfoDisplay from './FoursquareInfoDisplay.js'
 import * as FoursquareAPI from '../FoursquareAPI.js'
 
@@ -32,7 +32,7 @@ export class MapContainer extends React.Component {
     const activeMarker = (activeMarkers.length === 1 ? activeMarkers[0] : {});
     if(!(Object.keys(activeMarker).length === 0 && activeMarker.constructor === Object)){
       FoursquareAPI.get(activeMarker.venue_id).then((data) => {
-        if(data.meta.code === '200'){
+        if(data.meta.code === 200){
           this.setState({
             activeMarker: activeMarker,
             showingInfoWindow: true,
@@ -78,13 +78,6 @@ export class MapContainer extends React.Component {
     }
   }
 
-  onMapReady = (a,s,d,f) =>{
-    console.log("Map Ready");
-    console.log(a);
-    console.log(s);
-    console.log(d);
-    console.log(f);
-  }
 
   render() {
     console.log("Rendering Map Container");

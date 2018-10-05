@@ -110,6 +110,9 @@ class App extends Component {
       filter:this.state.filter
     });
   }
+  googleMapsError(){
+    console.log("Google Maps Errored!");
+  }
 
   render() {
     console.log("Rendering App");

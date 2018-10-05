@@ -38,4 +38,14 @@
     -->
 
   </body>
+  <script>
+  function gm_authFailure(a,s,d,f){
+    console.log("gm_authFailure");
+    let content = `<div style="height:100%" class="container h-100 d-flex justify-content-center">
+    <div class="alert alert-danger" role="alert" style="font-size:36pt;">Unable to load Google maps! Check your API key!</div>
+</div>`;
+
+    document.getElementById("root").innerHTML = content;
+  }
+  </script>
 </html>
